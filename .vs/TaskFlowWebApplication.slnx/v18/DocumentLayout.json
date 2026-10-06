@@ -1,0 +1,114 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.me.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.me.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.register.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.register.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4268BDD5-B280-4787-A0D1-622B7EFE8818}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.Me.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Me.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.Me.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Me.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.Me.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T15:04:49.978Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.Login.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T15:04:32.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthController.Register.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T15:04:02.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAADgvwQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-06T14:43:07.585Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 270,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
