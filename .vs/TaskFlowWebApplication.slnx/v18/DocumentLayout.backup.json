@@ -3,6 +3,34 @@
   "WorkspaceRootPath": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\dtos\\registerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.register.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.register.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\model\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\model\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controller\\authcontroller.login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controller\\authcontroller.login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,15 +42,106 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Program.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Program.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Program.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Program.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T08:23:40.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T08:19:54.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Users.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Model\\Users.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Model\\Users.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Model\\Users.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Model\\Users.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAA1wBEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T08:13:34.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T06:43:47.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.Register.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.Register.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T06:41:54.529Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\README.md",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\README.md",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\README.md",
+              "RelativeToolTip": "TaskFlowWebApplication\\README.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-10-08T06:00:55.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "RegisterDTO.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\DTOs\\RegisterDTO.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\DTOs\\RegisterDTO.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\DTOs\\RegisterDTO.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\DTOs\\RegisterDTO.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAQwAYAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-08T05:32:56.609Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "AuthController.Login.cs",
               "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
               "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
@@ -30,8 +149,7 @@
               "RelativeToolTip": "TaskFlowWebApplication\\Controller\\AuthController.Login.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-06T15:04:32.595Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-06T15:04:32.595Z"
             }
           ]
         },
