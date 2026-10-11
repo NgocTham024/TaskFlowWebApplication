@@ -7,6 +7,7 @@ namespace TaskFlowWebApplication.Data
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
+
         }
         public DbSet<Users> Users { get; set; }
     }
