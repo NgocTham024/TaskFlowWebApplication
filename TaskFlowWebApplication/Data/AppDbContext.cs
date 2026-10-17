@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Data
 {
@@ -10,5 +11,6 @@ namespace TaskFlowWebApplication.Data
 
         }
         public DbSet<Users> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

@@ -6,5 +6,6 @@ namespace TaskFlowWebApplication.Services
     {
         string GenerateAccessToken(Users user);
         string GenerateRefreshToken();
+        DateTime GetAccessTokenExpiration();
     }
 }

@@ -50,5 +50,12 @@ namespace TaskFlowWebApplication.Services
             rng.GetBytes(randomBytes);
             return Convert.ToBase64String(randomBytes);
         }
+
+        public DateTime GetAccessTokenExpiration()
+        {
+            var jwtSettings = _configuration.GetSection("JwtSettings");
+            var minutes = int.Parse(jwtSettings["AccessTokenExpirationMinutes"] ?? "15");
+            return DateTime.UtcNow.AddMinutes(minutes);
+        }
     }
 }

@@ -12,17 +12,19 @@ namespace TaskFlowWebApplication.Controller
         private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
-
+        private readonly IAuthService _authService;
         public AuthController(
             AppDbContext context,
             ITokenService tokenService,
             IEmailService emailService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IAuthService authService)
         {
             _context = context;
             _tokenService = tokenService;
             _emailService = emailService;
             _configuration = configuration;
+            _authService = authService;
         }
     }
 }

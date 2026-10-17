@@ -26,6 +26,9 @@ namespace TaskFlowWebApplication
             // Đăng ký Services
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ITokenIssue, TokenIssue>();
+
 
             // Cấu hình JWT Authentication
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");

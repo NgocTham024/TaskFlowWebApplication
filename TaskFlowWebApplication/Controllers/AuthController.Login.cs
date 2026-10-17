@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 using TaskFlowWebApplication.DTOs;
+using TaskFlowWebApplication.Helpers;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Controller
 {
@@ -11,62 +11,65 @@ namespace TaskFlowWebApplication.Controller
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
-            //tìm user bằng email or username
+            // 1. Tìm user bằng email HOẶC username
             var user = await _context.Users.FirstOrDefaultAsync(u =>
                 u.Email == dto.EmailOrUsername || u.Username == dto.EmailOrUsername);
 
             if (user == null)
                 return Unauthorized(new { message = "Sai email/username hoặc mật khẩu" });
 
-            // verify password bằng BCrypt
+            // 2. Verify password bằng BCrypt
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
             if (!isPasswordValid)
                 return Unauthorized(new { message = "Sai email/username hoặc mật khẩu" });
 
-            // kiểm tra trạng thái tài khoản (email đã xác thực chưa)
+            // 3. Kiểm tra trạng thái tài khoản (email đã xác thực chưa)
             if (!user.IsEmailVerified)
                 return Unauthorized(new { message = "Tài khoản chưa được xác thực. Vui lòng kiểm tra email." });
 
-            //tạo JWT Access Token (hạn 15 phút)
+            // 4. Tạo JWT Access Token (hạn 15 phút)
             var accessToken = _tokenService.GenerateAccessToken(user);
 
-            // tạo Refresh Token
+            // 5. Tạo Refresh Token
             var refreshToken = _tokenService.GenerateRefreshToken();
 
-            // lưu Refresh Token dạng HASH vào database (SHA256)
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var refreshTokenDays = int.Parse(jwtSettings["RefreshTokenExpirationDays"] ?? "3");
+            var refreshExpiry = DateTime.UtcNow.AddDays(refreshTokenDays);
 
-            user.RefreshToken = HashToken(refreshToken);
-            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(refreshTokenDays);
+            // 6. Lưu Refresh Token dạng hash (BCrypt) vào bảng RefreshTokens
+            var refreshTokenEntity = new RefreshToken
+            {
+                UserId = user.UserId,
+                TokenHash = RefreshTokenHelper.HashToken(refreshToken),
+                ExpiresAt = refreshExpiry,
+                RevokedAt = null
+            };
+            _context.RefreshTokens.Add(refreshTokenEntity);
+
+            // Cập nhật cả trên bảng Users
+            user.RefreshToken = RefreshTokenHelper.HashToken(refreshToken);
+            user.RefreshTokenExpiryTime = refreshExpiry;
             await _context.SaveChangesAsync();
 
-            // gửi Refresh Token qua HttpOnly Cookie
+            // 7. Gửi Refresh Token qua HttpOnly Cookie
             SetRefreshTokenCookie(refreshToken, refreshTokenDays);
 
             return Ok(new
             {
                 accessToken,
-                accessTokenExpiration = DateTime.UtcNow.AddMinutes(
-                    int.Parse(jwtSettings["AccessTokenExpirationMinutes"] ?? "15"))
+                accessTokenExpiration = _tokenService.GetAccessTokenExpiration()
             });
         }
 
-        // hash token bằng SHA256 trước khi lưu db
-        private static string HashToken(string token)
-        {
-            var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(token));
-            return Convert.ToHexString(bytes);
-        }
-
-        // set refresh token vào HttpOnly Cookie
+        // Set refresh token vào HttpOnly Cookie
         private void SetRefreshTokenCookie(string refreshToken, int expirationDays)
         {
             var cookieOptions = new CookieOptions
             {
-                HttpOnly = true,    // JavaScript không thể đọc
-                Secure = true,      // Chỉ gửi qua HTTPS
-                SameSite = SameSiteMode.Strict, // Chống CSRF
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
                 Expires = DateTime.UtcNow.AddDays(expirationDays)
             };
 
