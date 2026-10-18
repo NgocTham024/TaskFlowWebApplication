@@ -1,4 +1,5 @@
-﻿using BCrypt.Net;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace TaskFlowWebApplication.Helpers
 {
@@ -6,11 +7,8 @@ namespace TaskFlowWebApplication.Helpers
     {
         public static string HashToken(string token)
         {
-            return BCrypt.Net.BCrypt.HashPassword(token);
-        }
-        public static bool VerifyToken(string token, string tokenHash)
-        {
-            return BCrypt.Net.BCrypt.Verify(token, tokenHash);
+            byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(token));
+            return Convert.ToBase64String(bytes);
         }
     }
 }

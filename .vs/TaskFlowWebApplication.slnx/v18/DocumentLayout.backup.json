@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controllers\\authcontroller.refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controllers\\authcontroller.refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\helpers\\refreshtokenhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\helpers\\refreshtokenhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controllers\\authcontroller.me.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controllers\\authcontroller.me.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\services\\tokenservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\services\\tokenservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\controllers\\authcontroller.refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|solutionrelative:taskflowwebapplication\\controllers\\authcontroller.refreshtoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A0C895F-6386-3205-5079-FEE0780247AC}|TaskFlowWebApplication\\TaskFlowWebApplication.csproj|c:\\users\\gigabyte\\desktop\\project a\\backend\\taskflowwebapplication\\taskflowwebapplication\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,71 +50,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TokenService .cs",
-              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\TokenService .cs",
-              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\TokenService .cs",
-              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\TokenService .cs",
-              "RelativeToolTip": "TaskFlowWebApplication\\Services\\TokenService .cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T12:31:00.906Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RefreshToken.cs",
-              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Models\\RefreshToken.cs",
-              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Models\\RefreshToken.cs",
-              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Models\\RefreshToken.cs",
-              "RelativeToolTip": "TaskFlowWebApplication\\Models\\RefreshToken.cs",
+              "DocumentIndex": 1,
+              "Title": "RefreshTokenHelper.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Helpers\\RefreshTokenHelper.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Helpers\\RefreshTokenHelper.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Helpers\\RefreshTokenHelper.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Helpers\\RefreshTokenHelper.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T12:28:45.74Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\IAuthService.cs",
-              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\IAuthService.cs",
-              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\IAuthService.cs",
-              "RelativeToolTip": "TaskFlowWebApplication\\Services\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T03:49:28.047Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\AuthService.cs",
-              "RelativeToolTip": "TaskFlowWebApplication\\Services\\AuthService.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAgwCkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T03:49:01.888Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ITokenService.cs",
-              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\ITokenService.cs",
-              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\ITokenService.cs",
-              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\ITokenService.cs",
-              "RelativeToolTip": "TaskFlowWebApplication\\Services\\ITokenService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T12:20:08.238Z",
+              "WhenOpened": "2026-10-18T13:47:01.344Z",
               "EditorCaption": ""
             },
             {
@@ -115,7 +71,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
+              "Title": "TokenService .cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\TokenService .cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\TokenService .cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\TokenService .cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Services\\TokenService .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T12:31:00.906Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\IAuthService.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Services\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T03:49:28.047Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\AuthService.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Services\\AuthService.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwCkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T03:49:01.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ITokenService.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\ITokenService.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\ITokenService.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\ITokenService.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Services\\ITokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T12:20:08.238Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "IEmailService.cs",
               "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Services\\IEmailService.cs",
               "RelativeDocumentMoniker": "TaskFlowWebApplication\\Services\\IEmailService.cs",
@@ -127,20 +131,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "AuthController.RefreshToken.cs",
               "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controllers\\AuthController.RefreshToken.cs",
               "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controllers\\AuthController.RefreshToken.cs",
               "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controllers\\AuthController.RefreshToken.cs",
               "RelativeToolTip": "TaskFlowWebApplication\\Controllers\\AuthController.RefreshToken.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAYwB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-17T03:10:29.101Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "AuthController.Me.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controllers\\AuthController.Me.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Controllers\\AuthController.Me.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Controllers\\AuthController.Me.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Controllers\\AuthController.Me.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T12:45:41.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RefreshToken.cs",
+              "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Models\\RefreshToken.cs",
+              "RelativeDocumentMoniker": "TaskFlowWebApplication\\Models\\RefreshToken.cs",
+              "ToolTip": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Models\\RefreshToken.cs",
+              "RelativeToolTip": "TaskFlowWebApplication\\Models\\RefreshToken.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-17T12:28:45.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\GIGABYTE\\Desktop\\Project A\\backend\\TaskFlowWebApplication\\TaskFlowWebApplication\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "TaskFlowWebApplication\\Data\\AppDbContext.cs",
@@ -148,8 +176,7 @@
               "RelativeToolTip": "TaskFlowWebApplication\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T02:43:29.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-10-17T02:43:29.035Z"
             }
           ]
         },

@@ -19,24 +19,22 @@ namespace TaskFlowWebApplication.Services
 
         public async Task<(bool Success, string Message, string? AccessToken, DateTime? ExpiresAt)> RefreshTokenAsync(string refreshToken)
         {
-            // 1. Lấy tất cả token chưa bị revoke
-            var candidateTokens = await _context.RefreshTokens
-                .Where(t => t.RevokedAt == null)
-                .ToListAsync();
+            // hash token đầu vào bằng SHA256
+            var tokenHash = RefreshTokenHelper.HashToken(refreshToken);
 
-            // 2. Tìm token khớp bằng BCrypt verify
-            var storedToken = candidateTokens.FirstOrDefault(
-                t => RefreshTokenHelper.VerifyToken(refreshToken, t.TokenHash));
+            // tìm token khớp trực tiếp trong db
+            var storedToken = await _context.RefreshTokens
+                .FirstOrDefaultAsync(t => t.TokenHash == tokenHash && t.RevokedAt == null);
 
-            // 3. Kiểm tra token hợp lệ
+            // kiểm tra token hợp lệ
             if (storedToken == null)
                 return (false, "Refresh Token không hợp lệ hoặc đã bị thu hồi.", null, null);
 
-            // 4. Kiểm tra token đã bị revoke
+            // kiểm tra token đã bị revoke
             if (storedToken.RevokedAt != null)
                 return (false, "Refresh Token đã bị thu hồi.", null, null);
 
-            // 5. Kiểm tra token hết hạn (> 3 ngày)
+            // kiểm tra token hết hạn (> 3 ngày)
             if (storedToken.ExpiresAt <= DateTime.UtcNow)
             {
                 storedToken.RevokedAt = DateTime.UtcNow;
@@ -44,7 +42,7 @@ namespace TaskFlowWebApplication.Services
                 return (false, "Refresh Token đã hết hạn. Vui lòng đăng nhập lại.", null, null);
             }
 
-            // 6. Tìm user sở hữu token
+            // tìm user sở hữu token
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == storedToken.UserId);
             if (user == null)
             {
@@ -53,7 +51,7 @@ namespace TaskFlowWebApplication.Services
                 return (false, "Người dùng không tồn tại.", null, null);
             }
 
-            // 7. Tạo Access Token mới
+            // tạo Access Token mới
             string accessToken = _tokenService.GenerateAccessToken(user);
             DateTime expiresAt = _tokenService.GetAccessTokenExpiration();
 
