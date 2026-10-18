@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TaskFlowWebApplication.Data;
+using TaskFlowWebApplication.Services;
 
 namespace TaskFlowWebApplication
 {
@@ -19,13 +23,44 @@ namespace TaskFlowWebApplication
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+            // Đăng ký Services
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ITokenIssue, TokenIssue>();
+
+
+            // Cấu hình JWT Authentication
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!))
+                };
+            });
+
+            // CORS - cần AllowCredentials để gửi cookie
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy =>
+                options.AddPolicy("AllowFrontend", policy =>
                 {
-                    policy.AllowAnyOrigin()
+                    policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
                           .AllowAnyMethod()
-                          .AllowAnyHeader();
+                          .AllowAnyHeader()
+                          .AllowCredentials(); // Bắt buộc để gửi/nhận cookie
                 });
             });
 
@@ -40,8 +75,9 @@ namespace TaskFlowWebApplication
 
             app.UseHttpsRedirection();
 
-            app.UseCors("AllowAll");
+            app.UseCors("AllowFrontend");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
@@ -50,4 +86,3 @@ namespace TaskFlowWebApplication
         }
     }
 }
-

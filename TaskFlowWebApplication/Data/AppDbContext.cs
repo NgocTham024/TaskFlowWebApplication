@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Data
 {
@@ -7,7 +8,9 @@ namespace TaskFlowWebApplication.Data
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
+
         }
         public DbSet<Users> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }
