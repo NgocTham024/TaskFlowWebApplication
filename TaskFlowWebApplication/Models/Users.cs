@@ -1,7 +1,10 @@
-﻿namespace TaskFlowWebApplication.Model
+using System.ComponentModel.DataAnnotations;
+
+namespace TaskFlowWebApplication.Model
 {
     public class Users
     {
+        [Key]
         public int UserId { get; set; }
 
         public string Username { get; set; } = string.Empty;
@@ -17,5 +20,9 @@
         public string? EmailVerificationToken { get; set; }
 
         public DateTime? EmailVerificationTokenExpires { get; set; }
+
+        // JWT Refresh Token
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiryTime { get; set; }
     }
 }
