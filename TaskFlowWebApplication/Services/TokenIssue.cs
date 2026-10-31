@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using TaskFlowWebApplication.Data;
@@ -27,9 +28,18 @@ namespace TaskFlowWebApplication.Services
             var jwt = _config.GetSection("JwtSettings");
             var accessMinutes = int.Parse(jwt["AccessTokenExpirationMinutes"] ?? "15");
             var refreshDays = int.Parse(jwt["RefreshTokenExpirationDays"] ?? "3");
-
+            // lấy danh sách Role của User từ database
+            var roles = await (
+                from userRole in _context.UserRoles
+                join role in _context.Roles
+                    on userRole.RoleId equals role.RoleId
+                where userRole.UserId == user.UserId
+                select role.RoleName
+            )
+            .Distinct()
+            .ToListAsync();
             // Tạo tokens
-            var accessToken = _tokenService.GenerateAccessToken(user);
+            var accessToken = _tokenService.GenerateAccessToken(user, roles);
             var refreshToken = _tokenService.GenerateRefreshToken();
             var refreshExpiry = DateTime.UtcNow.AddDays(refreshDays);
 

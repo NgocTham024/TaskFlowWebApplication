@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -7,6 +8,7 @@ namespace TaskFlowWebApplication.Controller
 {
     public partial class AuthController
     {
+        [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {

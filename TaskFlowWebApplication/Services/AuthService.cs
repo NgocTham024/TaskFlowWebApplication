@@ -52,7 +52,20 @@ namespace TaskFlowWebApplication.Services
             }
 
             // tạo Access Token mới
-            string accessToken = _tokenService.GenerateAccessToken(user);
+            // Lấy danh sách Role của người dùng từ database
+            var roles = await (
+                from userRole in _context.UserRoles
+                join role in _context.Roles
+                    on userRole.RoleId equals role.RoleId
+                where userRole.UserId == user.UserId
+                select role.RoleName
+            )
+            .Distinct()
+            .ToListAsync();
+
+            // Tạo Access Token mới có Role Claim
+            string accessToken = _tokenService.GenerateAccessToken(user, roles);
+
             DateTime expiresAt = _tokenService.GetAccessTokenExpiration();
 
             return (true, "Làm mới Access Token thành công.", accessToken, expiresAt);
