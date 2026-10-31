@@ -16,17 +16,20 @@ namespace TaskFlowWebApplication.Services
             _configuration = configuration;
         }
 
-        public string GenerateAccessToken(Users user)
+        public string GenerateAccessToken(Users user, IEnumerable<string> roles)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, user.Username)
             };
-
+            foreach (var role in roles.Distinct())
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
