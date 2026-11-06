@@ -24,9 +24,21 @@ namespace TaskFlowWebApplication.Controller
 
                 if (user != null)
                 {
-                    // Thu hồi Refresh Token
+                    // Thu hồi Refresh Token trong bảng Users
                     user.RefreshToken = null;
                     user.RefreshTokenExpiryTime = null;
+
+                    // Thu hồi Refresh Token trong bảng RefreshTokens
+                    var storedRefreshToken = await _context.RefreshTokens
+                        .FirstOrDefaultAsync(rt =>
+                            rt.UserId == user.UserId &&
+                            rt.TokenHash == tokenHash &&
+                            rt.RevokedAt == null);
+
+                    if (storedRefreshToken != null)
+                    {
+                        storedRefreshToken.RevokedAt = DateTime.UtcNow;
+                    }
 
                     await _context.SaveChangesAsync();
                 }

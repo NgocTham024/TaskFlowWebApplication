@@ -4,32 +4,54 @@ namespace TaskFlowWebApplication.Controller
 {
     public partial class AuthController
     {
+
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken()
         {
-            // lấy refresh token từ HttpOnly Cookie
-            if (!Request.Cookies.TryGetValue("refreshToken", out string? refreshToken)
+            // Lấy Refresh Token từ HttpOnly Cookie
+            if (!Request.Cookies.TryGetValue(
+                    "refreshToken",
+                    out var refreshToken)
                 || string.IsNullOrWhiteSpace(refreshToken))
             {
-                return Unauthorized(new { message = "Không tìm thấy Refresh Token." });
+                return Unauthorized(new
+                {
+                    message = "Không tìm thấy Refresh Token."
+                });
             }
 
-            // gọi AuthService xử lý logic
+            // Gọi AuthService để xác minh và xoay vòng token
             var result = await _authService.RefreshTokenAsync(refreshToken);
 
             if (!result.Success)
             {
-                // xóa cookie nếu token không hợp lệ/hết hạn
-                Response.Cookies.Delete("refreshToken");
-                return Unauthorized(new { message = result.Message });
+                // Xóa Cookie nếu Refresh Token không hợp lệ
+                Response.Cookies.Delete("refreshToken", new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict,
+                    Path = "/"
+                });
+
+                return Unauthorized(new
+                {
+                    message = result.Message
+                });
             }
 
-            // trả Access Token mới
+            // Cập nhật Cookie bằng Refresh Token mới
+            SetRefreshTokenCookie(
+                result.RefreshToken!,
+                result.RefreshTokenExpirationDays);
+
+            // Trả Access Token mới cho Frontend
             return Ok(new
             {
                 accessToken = result.AccessToken,
                 expiresAt = result.ExpiresAt
             });
         }
+
     }
 }
