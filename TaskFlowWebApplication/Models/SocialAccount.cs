@@ -1,30 +1,19 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace TaskFlowWebApplication.Model
+namespace TaskFlowWebApplication.Models;
+
+public partial class SocialAccount
 {
-    [Table("social_accounts")]
-    public class SocialAccount
-    {
-        [Key]
-        [Column("id")]
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        [Column("user_id")]
-        public int UserId { get; set; }
+    public int UserId { get; set; }
 
-        [Required]
-        [MaxLength(30)]
-        [Column("provider")]
-        public string Provider { get; set; } = string.Empty;
+    public string Provider { get; set; } = null!;
 
-        [Required]
-        [MaxLength(255)]
-        [Column("provider_user_id")]
-        public string ProviderUserId { get; set; } = string.Empty;
+    public string ProviderUserId { get; set; } = null!;
 
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-    }
+    public DateTime CreatedAt { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }
