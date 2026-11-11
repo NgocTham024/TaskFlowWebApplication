@@ -70,14 +70,12 @@ namespace TaskFlowWebApplication
                 .PersistKeysToFileSystem(
                     new DirectoryInfo(dataProtectionPath));
 
-            // DATABASE
+            // DATABASE: SQL SERVER
             var connectionString =
                 builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(
-                    connectionString,
-                    ServerVersion.AutoDetect(connectionString)));
+                options.UseSqlServer(connectionString));
 
             // SERVICES
             builder.Services.AddScoped<ITokenService, TokenService>();
