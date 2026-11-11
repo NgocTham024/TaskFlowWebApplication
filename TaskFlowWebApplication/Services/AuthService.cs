@@ -56,9 +56,9 @@ namespace TaskFlowWebApplication.Services
             var roles = await (
                 from userRole in _context.UserRoles
                 join role in _context.Roles
-                    on userRole.RoleId equals role.RoleId
+                    on userRole.RoleId equals role.Id
                 where userRole.UserId == user.UserId
-                select role.RoleName
+                select role.Name
             )
             .Distinct()
             .ToListAsync();

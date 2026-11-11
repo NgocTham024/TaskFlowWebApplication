@@ -1,9 +1,9 @@
-﻿using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Services
 {
     public interface ITokenIssue
     {
-        Task<IssuedTokens> IssueAsync(Users user);
+        Task<IssuedTokens> IssueAsync(User user);
     }
 }

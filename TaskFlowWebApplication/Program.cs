@@ -1,4 +1,4 @@
-
+﻿
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -50,9 +50,7 @@ namespace TaskFlowWebApplication
 
 
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(
-                    connectionString,
-                    ServerVersion.AutoDetect(connectionString)));
+                options.UseSqlServer(connectionString));
 
             // Đăng ký Services
             builder.Services.AddScoped<ITokenService, TokenService>();
@@ -60,6 +58,10 @@ namespace TaskFlowWebApplication
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ITokenIssue, TokenIssue>();
             builder.Services.AddScoped<UserRoleService>();
+            builder.Services.AddScoped<IWorkspaceService, WorkspaceService>();
+            builder.Services.AddScoped<IBoardService, BoardService>();
+            builder.Services.AddScoped<IBoardColumnService, BoardColumnService>();
+            builder.Services.AddScoped<ITaskService, TaskService>();
 
             // Authentication - JWT
             var jwtSettings = builder.Configuration

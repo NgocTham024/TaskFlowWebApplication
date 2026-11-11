@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Services
 {
@@ -16,7 +16,7 @@ namespace TaskFlowWebApplication.Services
             _configuration = configuration;
         }
 
-        public string GenerateAccessToken(Users user, IEnumerable<string> roles)
+        public string GenerateAccessToken(User user, IEnumerable<string> roles)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
 

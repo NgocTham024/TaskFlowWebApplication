@@ -23,7 +23,7 @@ namespace TaskFlowWebApplication.Controller
                 .OrderByDescending(rt => rt.ExpiresAt)
                 .Select(rt => new
                 {
-                    rt.RefreshTokenId,
+                    RefreshTokenId = rt.Id,
                     rt.ExpiresAt,
                     isExpired = rt.ExpiresAt <= DateTime.UtcNow
                 })
