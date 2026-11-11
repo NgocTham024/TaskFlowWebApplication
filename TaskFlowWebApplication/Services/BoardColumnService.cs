@@ -70,13 +70,25 @@ namespace TaskFlowWebApplication.Services
                 throw new ArgumentException("Tên cột không được để trống.");
             }
             int? maxPosition = await _context.BoardColumns.Where(c => c.BoardId == boardId).Select(c => (int?)c.Position).MaxAsync();
+            var now = DateTime.UtcNow;
+            var trimmedName = createColumnDTO.Name.Trim();
             var column = new BoardColumn
             {
                 BoardId = boardId,
                 Name = createColumnDTO.Name.Trim(),
                 Position = (maxPosition ?? -1) + 1,
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                TaskLists = new List<TaskList>
+                {
+                    new TaskList
+                    {
+                        Name = trimmedName,
+                        Position = 0,
+                        CreatedAt = now,
+                        UpdatedAt = now
+                    }
+                }
             };
             _context.BoardColumns.Add(column);
             await _context.SaveChangesAsync();
@@ -108,10 +120,16 @@ namespace TaskFlowWebApplication.Services
             var column = await GetColumnAsync(columnId);
             var membership = await GetMembershipAsync(column.Board.WorkspaceId, userId);
             EnsureOwner(membership);
-            bool hasLists = await _context.TaskLists.AnyAsync(l => l.ColumnId == columnId);
-            if (hasLists)
+            bool hasTasks = await _context.Tasks.AnyAsync(t => t.List.ColumnId == columnId);
+            if (hasTasks)
             {
-                throw new InvalidOperationException("Không thể xóa vì các cột đang chứa thông tin các danh sách. ");
+                throw new BusinessConflictException("Không thể xóa cột vì vẫn còn công việc bên trong. Hãy di chuyển hoặc xóa các công việc trước.");
+            }
+            // Xóa các danh sách rỗng thuộc cột trước khi xóa cột
+            var emptyLists = await _context.TaskLists.Where(l => l.ColumnId == columnId).ToListAsync();
+            if (emptyLists.Count > 0)
+            {
+                _context.TaskLists.RemoveRange(emptyLists);
             }
             _context.BoardColumns.Remove(column);
             await _context.SaveChangesAsync();

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TaskFlowWebApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cdc3bf349b005d08d87bca9fbede04b31fb31564")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6a7f58cfc25e3e4082006bf7917c4b542f2baa4")]
 [assembly: System.Reflection.AssemblyProductAttribute("TaskFlowWebApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TaskFlowWebApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

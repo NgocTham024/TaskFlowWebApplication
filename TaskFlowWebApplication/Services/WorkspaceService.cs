@@ -122,13 +122,20 @@ namespace TaskFlowWebApplication.Services
             {
                 return false;
             }
-            bool isOwner = await IsOwnerAsync(workspaceId, userId);
-            if (!isOwner)
+            if (!await IsOwnerAsync(workspaceId, userId))
             {
-                return false;
+                throw new UnauthorizedAccessException("Chỉ owner được xóa workspace.");
+            }
+            bool hasBoards = await _context.Boards.AnyAsync(b => b.WorkspaceId == workspaceId);
+            bool hasLabels = await _context.Labels.AnyAsync(l => l.WorkspaceId == workspaceId);
+            bool hasLogs = await _context.ActivityLogs.AnyAsync(a => a.WorkspaceId == workspaceId);
+            if (hasBoards || hasLabels || hasLogs)
+            {
+                throw new BusinessConflictException("Workspace còn board, nhãn hoặc nhật ký hoạt động.");
             }
             var members = await _context.WorkspaceMembers.Where(wm => wm.WorkspaceId == workspaceId).ToListAsync();
             _context.WorkspaceMembers.RemoveRange(members);
+            _context.Workspaces.Remove(workspace);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -176,11 +183,12 @@ namespace TaskFlowWebApplication.Services
             var members = await _context.WorkspaceMembers.AsNoTracking().Where(wm => wm.WorkspaceId == workspaceId).OrderBy(wm => wm.JoinedAt)
                 .Select(wm => new WorkspaceMemberResponseDTO
                 {
-                    WorkspaceId = wm.Id,
+                    WorkspaceId = wm.WorkspaceId,
                     UserId = wm.UserId,
                     Username = wm.User.Username,
                     Email = wm.User.Email,
                     RoleId = wm.RoleId,
+                    WorkspaceRole = wm.Role.Name,
                     JoinedAt = wm.JoinedAt
                 }).ToListAsync();
             return members;

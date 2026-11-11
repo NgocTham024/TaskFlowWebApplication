@@ -46,8 +46,7 @@ namespace TaskFlowWebApplication.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
-            catch (InvalidOperationException ex)
-                when (ex is not ObjectDisposedException)
+            catch (BusinessConflictException ex)
             {
                 return Conflict(new { message = ex.Message });
             }
@@ -205,8 +204,7 @@ namespace TaskFlowWebApplication.Controllers
         {
             return ExecuteAsync(async userId =>
             {
-                bool updated = await _taskService.UpdateTaskDeadlineAsync(
-                    taskId, updateTaskDeadlineDTO, userId);
+                bool updated = await _taskService.UpdateTaskDeadlineAsync(taskId, updateTaskDeadlineDTO, userId);
 
                 if (!updated)
                 {
@@ -235,5 +233,196 @@ namespace TaskFlowWebApplication.Controllers
                 return NoContent();
             });
         }
+        [HttpGet("~/api/workspaces/{workspaceId:int:min(1)}/tasks")]
+        public Task<IActionResult> GetTasksByWorkspace(int workspaceId,[FromQuery] TaskFilterDTO filter)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.GetTasksByWorkspaceAsync(workspaceId, filter, userId);
+                return Ok(result);
+            });
+        }
+        [HttpGet("columns/{columnId:int:min(1)}/lists")]
+        public Task<IActionResult> GetListsByColumn(int columnId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.GetListsByColumnAsync(columnId, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpPatch("{taskId:int:min(1)}/move-column")]
+        public Task<IActionResult> MoveTaskToColumn(int taskId, [FromBody] MoveTaskToColumnDTO moveTaskToColumnDTO)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                bool moved = await _taskService.MoveTaskToColumnAsync(taskId, moveTaskToColumnDTO, userId);
+                if (!moved)
+                {
+                    return NotFound(new
+                    {
+                        message = "Không tìm thấy công việc."
+                    });
+                }
+                return NoContent();
+            });
+        }
+
+        [HttpGet("me")]
+        public Task<IActionResult> GetMyTasks([FromQuery] int workspaceId,[FromQuery] TaskFilterDTO filter)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                if (workspaceId <= 0)
+                {
+                    return BadRequest(new
+                    {
+                        message = "workspaceId phải là số dương."
+                    });
+                }
+
+                var result = await _taskService.GetMyTasksAsync(workspaceId, filter, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpPost("{taskId:int:min(1)}/comments")]
+        public Task<IActionResult> AddComment(int taskId, [FromBody] SaveTaskCommentDTO saveTaskCommentDTO)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.AddCommentAsync(taskId, saveTaskCommentDTO, userId);
+                return StatusCode(StatusCodes.Status201Created, result);
+            });
+        }
+
+        [HttpGet("{taskId:int:min(1)}/comments")]
+        public Task<IActionResult> GetComments(int taskId,[FromQuery] int page = 1,[FromQuery] int pageSize = 20)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.GetCommentsAsync(taskId, page, pageSize, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpPut("{taskId:int:min(1)}/comments/{commentId:int:min(1)}")]
+        public Task<IActionResult> UpdateComment(int taskId, int commentId,[FromBody] SaveTaskCommentDTO saveTaskCommentDTO)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.UpdateCommentAsync(taskId, commentId, saveTaskCommentDTO, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpDelete("{taskId:int:min(1)}/comments/{commentId:int:min(1)}")]
+        public Task<IActionResult> DeleteComment(int taskId, int commentId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                await _taskService.DeleteCommentAsync(taskId, commentId, userId);
+                return NoContent();
+            });
+        }
+
+        [HttpGet("{taskId:int:min(1)}/labels")]
+        public Task<IActionResult> GetTaskLabels(int taskId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.GetTaskLabelsAsync(taskId, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpPost("{taskId:int:min(1)}/labels/{labelId:int:min(1)}")]
+        public Task<IActionResult> AddTaskLabel(int taskId, int labelId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                await _taskService.AddTaskLabelAsync(taskId, labelId, userId);
+                return NoContent();
+            });
+        }
+        [HttpDelete("{taskId:int:min(1)}/labels/{labelId:int:min(1)}")]
+        public Task<IActionResult> RemoveTaskLabel(int taskId, int labelId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                await _taskService.RemoveTaskLabelAsync(taskId, labelId, userId);
+                return NoContent();
+            });
+        }
+        [HttpDelete("{taskId:int:min(1)}/assignees/{userId:int:min(1)}")]
+        public Task<IActionResult> UnassignTask(int taskId, int userId)
+        {
+            return ExecuteAsync(async currentUserId =>
+            {
+                await _taskService.UnassignTaskAsync(taskId, userId, currentUserId);
+                return NoContent();
+            });
+        }
+        [HttpPut("comments/{commentId:int:min(1)}")]
+        public Task<IActionResult> UpdateCommentById(int commentId, [FromBody] SaveTaskCommentDTO saveTaskCommentDTO)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.UpdateCommentByIdAsync(commentId, saveTaskCommentDTO, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpDelete("comments/{commentId:int:min(1)}")]
+        public Task<IActionResult> DeleteCommentById(int commentId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                await _taskService.DeleteCommentByIdAsync(commentId, userId);
+                return NoContent();
+            });
+        }
+
+        [HttpGet("~/api/workspaces/{workspaceId:int:min(1)}/labels")]
+        public Task<IActionResult> GetWorkspaceLabels(int workspaceId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.GetWorkspaceLabelsAsync(workspaceId, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpPost("~/api/workspaces/{workspaceId:int:min(1)}/labels")]
+        public Task<IActionResult> CreateWorkspaceLabel(int workspaceId, [FromBody] SaveWorkspaceLabelDTO saveWorkspaceLabelDTO)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.CreateWorkspaceLabelAsync(workspaceId, saveWorkspaceLabelDTO, userId);
+                return StatusCode(StatusCodes.Status201Created, result);
+            });
+        }
+
+        [HttpPut("~/api/workspaces/{workspaceId:int:min(1)}/labels/{labelId:int:min(1)}")]
+        public Task<IActionResult> UpdateWorkspaceLabel(int workspaceId, int labelId, [FromBody] SaveWorkspaceLabelDTO saveWorkspaceLabelDTO)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                var result = await _taskService.UpdateWorkspaceLabelAsync(workspaceId, labelId, saveWorkspaceLabelDTO, userId);
+                return Ok(result);
+            });
+        }
+
+        [HttpDelete("~/api/workspaces/{workspaceId:int:min(1)}/labels/{labelId:int:min(1)}")]
+        public Task<IActionResult> DeleteWorkspaceLabel(int workspaceId, int labelId)
+        {
+            return ExecuteAsync(async userId =>
+            {
+                await _taskService.DeleteWorkspaceLabelAsync(workspaceId, labelId, userId);
+                return NoContent();
+            });
+        }
+
     }
 }

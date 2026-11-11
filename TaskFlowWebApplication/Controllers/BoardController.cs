@@ -81,7 +81,7 @@ namespace TaskFlowWebApplication.Controllers
                 return Forbid();
             }
         }
-        [HttpGet("boards/{boardId:int}")]
+        [HttpGet("boards/boardId:int")]
         public async Task<ActionResult<BoardResponseDTO>> GetBoardById(int boardId)
         {
             if (!TryGetUserId(out int userId))

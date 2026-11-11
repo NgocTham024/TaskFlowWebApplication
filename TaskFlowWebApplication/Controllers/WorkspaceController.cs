@@ -59,7 +59,10 @@ namespace TaskFlowWebApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMyWorkspaces()
         {
-            if (!TryGetCurrentUserId(out int userId))return Unauthorized();
+            if (!TryGetCurrentUserId(out int userId))
+            {
+                return Unauthorized();
+            }
             var workspaces = await _workspaceService.GetWorkspacesAsync(userId);
             return Ok(workspaces);
         }
@@ -86,7 +89,7 @@ namespace TaskFlowWebApplication.Controllers
             }
         }
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateWorkspace(int id,[FromBody] UpdateWorkspaceDTO dto)
+        public async Task<IActionResult> UpdateWorkspace(int id,[FromBody] UpdateWorkspaceDTO updateWorkspaceDTO)
         {
             if (!TryGetCurrentUserId(out int userId))
             {
@@ -94,7 +97,7 @@ namespace TaskFlowWebApplication.Controllers
             }
             try
             {
-                bool updated = await _workspaceService.UpdateWorkspaceAsync(id, dto, userId);
+                bool updated = await _workspaceService.UpdateWorkspaceAsync(id, updateWorkspaceDTO, userId);
                 if (!updated)
                 {
                     return NotFound(new { message = "Không tìm thấy không gian làm việc." });
@@ -131,7 +134,7 @@ namespace TaskFlowWebApplication.Controllers
             {
                 return Forbid();
             }
-            catch (InvalidOperationException ex)
+            catch (BusinessConflictException ex)
             {
                 return Conflict(new { message = ex.Message });
             }
@@ -148,9 +151,12 @@ namespace TaskFlowWebApplication.Controllers
                 bool added = await _workspaceService.AddMemberAsync(id, dto, userId);
                 if (!added)
                 {
-                    return Conflict(new { message = "Unable to add member." });
+                    return Conflict(new 
+                    { 
+                        message = "Không thể thêm thành viên." 
+                    });
                 }
-                return Ok(new { message = "Member added successfully." });
+                return Ok(new { message = "Thêm thành viên thành công." });
             }
             catch (UnauthorizedAccessException)
             {
@@ -173,7 +179,7 @@ namespace TaskFlowWebApplication.Controllers
                 var members = await _workspaceService.GetMembersAsync(id, userId);
                 if (members == null)
                 {
-                    return NotFound(new { message = "Workspace not found." });
+                    return NotFound(new { message = "Không tìm thấy không gian làm việc." });
                 }
                 return Ok(members);
             }
@@ -194,7 +200,7 @@ namespace TaskFlowWebApplication.Controllers
                 bool removed = await _workspaceService.RemoveMemberAsync(id, userId, currentUserId);
                 if (!removed)
                 {
-                    return NotFound(new { message = "Member not found." });
+                    return NotFound(new { message = "Không tìm thấy thành viên." });
                 }
                 return NoContent();
             }

@@ -9,13 +9,18 @@ namespace TaskFlowWebApplication.DTOs
 
         [Range(1, int.MaxValue)]
         public int? AssigneeId { get; set; }
-        // Các mốc thời gian theo UTC.
+        // các mốc thời gian theo utc.
         public DateTimeOffset? DueFrom { get; set; }
-        // Mốc kết thúc không bao gồm.
+        // mốc kết thúc không bao gồm.
         public DateTimeOffset? DueBefore { get; set; }
         [Range(1, int.MaxValue)]
         public int Page { get; set; } = 1;
         [Range(1, 100)]
         public int PageSize { get; set; } = 20;
+        [StringLength(200)]
+        public string? Search { get; set; }
+
+        [Range(1, int.MaxValue)]
+        public int? PriorityId { get; set; }
     }
 }
