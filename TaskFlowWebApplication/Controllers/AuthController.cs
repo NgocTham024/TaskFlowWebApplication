@@ -14,13 +14,15 @@ namespace TaskFlowWebApplication.Controller
         private readonly IConfiguration _configuration;
         private readonly IAuthService _authService;
         private readonly UserRoleService _userRoleService;
+        private readonly ILogger<AuthController> _logger;
         public AuthController(
             AppDbContext context,
             ITokenService tokenService,
             IEmailService emailService,
             IConfiguration configuration,
             IAuthService authService,
-            UserRoleService userRoleService)
+            UserRoleService userRoleService,
+            ILogger<AuthController> logger)
         {
             _context = context;
             _tokenService = tokenService;
@@ -28,6 +30,7 @@ namespace TaskFlowWebApplication.Controller
             _configuration = configuration;
             _authService = authService;
             _userRoleService = userRoleService;
+            _logger = logger;
         }
     }
 }

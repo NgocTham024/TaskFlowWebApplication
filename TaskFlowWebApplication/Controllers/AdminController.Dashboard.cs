@@ -13,17 +13,13 @@ namespace TaskFlowWebApplication.Controller
 
             var totalUsers = await _context.Users.CountAsync();
 
-            var verifiedUsers = await _context.Users
-                .CountAsync(u => u.IsEmailVerified);
+            var verifiedUsers = await _context.Users.CountAsync(u => u.IsEmailVerified != 0);
 
             var unverifiedUsers = totalUsers - verifiedUsers;
 
             var totalRoles = await _context.Roles.CountAsync();
 
-            var activeRefreshTokens = await _context.RefreshTokens
-                .CountAsync(rt =>
-                    rt.RevokedAt == null &&
-                    rt.ExpiresAt > DateTime.UtcNow);
+            var activeRefreshTokens = await _context.RefreshTokens.CountAsync(rt =>rt.RevokedAt == null &&rt.ExpiresAt > DateTime.UtcNow);
 
             return Ok(new
             {

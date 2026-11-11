@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.DTOs;
-using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 using System.Security.Cryptography;
+using System.Text.Encodings.Web;
 
 namespace TaskFlowWebApplication.Controller
 {
@@ -28,13 +29,13 @@ namespace TaskFlowWebApplication.Controller
             var verificationToken = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
 
             // tạo user mới (chưa xác thực email)
-            var user = new Users
+            var user = new User
             {
                 Username = dto.Username,
                 Email = dto.Email,
                 PasswordHash = hashedPassword,
                 Phone = dto.Phone,
-                IsEmailVerified = false,
+                IsEmailVerified = 0,
                 EmailVerificationToken = verificationToken,
                 EmailVerificationTokenExpires = DateTime.UtcNow.AddHours(24)
             };
@@ -44,15 +45,20 @@ namespace TaskFlowWebApplication.Controller
 
             // gửi email xác thực
             var appUrl = _configuration["AppSettings:BaseUrl"] ?? "https://localhost:7001";
-            var verifyLink = $"{appUrl}/api/auth/verify-email?token={verificationToken}&email={user.Email}";
+            var encodedToken = Uri.EscapeDataString(verificationToken);
+            var encodedEmail = Uri.EscapeDataString(user.Email);
+            var verifyLink = $"{appUrl}/api/auth/verify-email?token={encodedToken}&email={encodedEmail}";
+
+            var safeUsername = HtmlEncoder.Default.Encode(user.Username);
+            var safeLink = HtmlEncoder.Default.Encode(verifyLink);
 
             var htmlBody = $@"
                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
-                    <h2 style='color: #333;'>Xin chào {user.Username},</h2>
+                    <h2 style='color: #333;'>Xin chào {safeUsername},</h2>
                     <p>Cảm ơn bạn đã đăng ký tài khoản TaskFlow!</p>
                     <p>Vui lòng click vào nút bên dưới để xác thực email:</p>
                     <div style='text-align: center; margin: 30px 0;'>
-                        <a href='{verifyLink}' 
+                        <a href='{safeLink}' 
                            style='background-color: #4CAF50; color: white; padding: 14px 28px; 
                                   text-decoration: none; border-radius: 5px; font-size: 16px;'>
                             Xác thực Email
@@ -68,17 +74,25 @@ namespace TaskFlowWebApplication.Controller
             {
                 await _emailService.SendAsync(user.Email, "TaskFlow - Xác thực tài khoản", htmlBody);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //log lỗi gửi email nhưng vẫn tạo user thành công
+                _logger.LogError(ex, "Không thể gửi email xác thực cho user {UserId}", user.UserId);
                 return Ok(new
                 {
-                    message = "Đăng ký thành công! Tuy nhiên không thể gửi email xác thực. Vui lòng liên hệ hỗ trợ."
+                    emailSent = false,
+                    message = "Tài khoản đã được tạo nhưng chưa gửi được email xác thực.",
+                    emailError = string.Equals(
+                        _configuration["ASPNETCORE_ENVIRONMENT"], "Development",
+                        StringComparison.OrdinalIgnoreCase)
+                        && ex is InvalidOperationException
+                            ? ex.Message
+                            : null
                 });
             }
 
             return Ok(new
             {
+                emailSent = true,
                 message = "Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản."
             });
         }
@@ -93,14 +107,15 @@ namespace TaskFlowWebApplication.Controller
             if (user == null)
                 return BadRequest(new { message = "Link xác thực không hợp lệ." });
 
-            if (user.EmailVerificationTokenExpires < DateTime.UtcNow)
+            if (!user.EmailVerificationTokenExpires.HasValue
+                || user.EmailVerificationTokenExpires.Value <= DateTime.UtcNow)
                 return BadRequest(new { message = "Link xác thực đã hết hạn. Vui lòng đăng ký lại." });
 
-            if (user.IsEmailVerified)
+            if (user.IsEmailVerified != 0)
                 return Ok(new { message = "Email đã được xác thực trước đó." });
 
             //xác thực thành công
-            user.IsEmailVerified = true;
+            user.IsEmailVerified = 1;
             user.EmailVerificationToken = null;
             user.EmailVerificationTokenExpires = null;
             await _context.SaveChangesAsync();

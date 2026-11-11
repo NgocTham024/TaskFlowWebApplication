@@ -69,9 +69,9 @@ namespace TaskFlowWebApplication.Controller
             var roles = await (
                 from userRole in _context.UserRoles
                 join role in _context.Roles
-                    on userRole.RoleId equals role.RoleId
+                    on userRole.RoleId equals role.Id
                 where userRole.UserId == id
-                select new { role.RoleId, role.RoleName }
+                select new { RoleId = role.Id, RoleName = role.Name }
             ).ToListAsync();
 
             return Ok(new
@@ -139,7 +139,7 @@ namespace TaskFlowWebApplication.Controller
 
             if (dto.IsEmailVerified.HasValue)
             {
-                user.IsEmailVerified = dto.IsEmailVerified.Value;
+                user.IsEmailVerified = (byte)(dto.IsEmailVerified.Value ? 1 : 0);
             }
 
             await _context.SaveChangesAsync();
@@ -213,12 +213,12 @@ namespace TaskFlowWebApplication.Controller
                 return NotFound(new { message = "Không tìm thấy user." });
             }
 
-            if (user.IsEmailVerified)
+            if (user.IsEmailVerified != 0)
             {
                 return BadRequest(new { message = "Email đã được xác thực trước đó." });
             }
 
-            user.IsEmailVerified = true;
+            user.IsEmailVerified = 1;
             user.EmailVerificationToken = null;
             user.EmailVerificationTokenExpires = null;
             await _context.SaveChangesAsync();

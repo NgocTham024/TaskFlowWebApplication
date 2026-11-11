@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.DTOs;
-using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Controller
 {
@@ -13,11 +13,11 @@ namespace TaskFlowWebApplication.Controller
         {
             var roles = await _context.Roles
                 .AsNoTracking()
-                .OrderBy(r => r.RoleId)
+                .OrderBy(r => r.Id)
                 .Select(r => new
                 {
-                    r.RoleId,
-                    r.RoleName
+                    RoleId = r.Id,
+                    RoleName = r.Name
                 })
                 .ToListAsync();
 
@@ -30,16 +30,16 @@ namespace TaskFlowWebApplication.Controller
         {
             // kiểm tra role đã tồn tại
             var exists = await _context.Roles
-                .AnyAsync(r => r.RoleName == dto.RoleName);
+                .AnyAsync(r => r.Name == dto.RoleName);
 
             if (exists)
             {
                 return BadRequest(new { message = "Role đã tồn tại." });
             }
 
-            var role = new Roles
+            var role = new Role
             {
-                RoleName = dto.RoleName
+                Name = dto.RoleName
             };
 
             _context.Roles.Add(role);
@@ -48,7 +48,7 @@ namespace TaskFlowWebApplication.Controller
             return Ok(new
             {
                 message = "Tạo role thành công.",
-                role = new { role.RoleId, role.RoleName }
+                role = new { RoleId = role.Id, RoleName = role.Name }
             });
         }
 
@@ -67,9 +67,9 @@ namespace TaskFlowWebApplication.Controller
             var roles = await (
                 from userRole in _context.UserRoles
                 join role in _context.Roles
-                    on userRole.RoleId equals role.RoleId
+                    on userRole.RoleId equals role.Id
                 where userRole.UserId == id
-                select new { role.RoleId, role.RoleName }
+                select new { RoleId = role.Id, RoleName = role.Name }
             ).ToListAsync();
 
             return Ok(new { userId = id, roles });
@@ -92,7 +92,7 @@ namespace TaskFlowWebApplication.Controller
 
             // kiểm tra role tồn tại
             var role = await _context.Roles
-                .FirstOrDefaultAsync(r => r.RoleId == dto.RoleId);
+                .FirstOrDefaultAsync(r => r.Id == dto.RoleId);
 
             if (role == null)
             {
@@ -107,11 +107,11 @@ namespace TaskFlowWebApplication.Controller
             {
                 return BadRequest(new
                 {
-                    message = $"User đã được gán role '{role.RoleName}'."
+                    message = $"User đã được gán role '{role.Name}'."
                 });
             }
 
-            var userRole = new UserRoles
+            var userRole = new UserRole
             {
                 UserId = id,
                 RoleId = dto.RoleId
@@ -122,7 +122,7 @@ namespace TaskFlowWebApplication.Controller
 
             return Ok(new
             {
-                message = $"Gán role '{role.RoleName}' thành công."
+                message = $"Gán role '{role.Name}' thành công."
             });
         }
 

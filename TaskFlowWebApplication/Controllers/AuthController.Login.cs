@@ -44,7 +44,7 @@ namespace TaskFlowWebApplication.Controller
             }
 
             // kiểm tra trạng thái tài khoản
-            if (!user.IsEmailVerified)
+            if (user.IsEmailVerified == 0)
             {
                 return Unauthorized(new
                 {
@@ -56,9 +56,9 @@ namespace TaskFlowWebApplication.Controller
             var roles = await (
                 from userRole in _context.UserRoles
                 join role in _context.Roles
-                    on userRole.RoleId equals role.RoleId
+                    on userRole.RoleId equals role.Id
                 where userRole.UserId == user.UserId
-                select role.RoleName
+                select role.Name
             ).Distinct() .ToListAsync();
 
             // kiểm tra tài khoản đã được phân quyền
@@ -71,9 +71,7 @@ namespace TaskFlowWebApplication.Controller
             }
 
             // tạo JWT Access Token chứa Role Claim
-            var accessToken = _tokenService.GenerateAccessToken(
-                user,
-                roles
+            var accessToken = _tokenService.GenerateAccessToken(user,roles
             );
 
             // tạo Refresh Token
