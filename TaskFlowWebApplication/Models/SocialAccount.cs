@@ -1,31 +1,32 @@
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskFlowWebApplication.Model
 {
-    [Table("SocialAccounts")]
+    [Table("social_accounts")]
     public class SocialAccount
     {
         [Key]
-        public int SocialAccountId { get; set; }
+        [Column("id")]
+        public long Id { get; set; }
 
-        [Required]
+        [Column("user_id")]
         public int UserId { get; set; }
 
-        // Ví dụ: Google, Microsoft
         [Required]
-        [MaxLength(50)]
+        [MaxLength(30)]
+        [Column("provider")]
         public string Provider { get; set; } = string.Empty;
 
-        // ID duy nhất của người dùng do nhà cung cấp cấp
         [Required]
         [MaxLength(255)]
+        [Column("provider_user_id")]
         public string ProviderUserId { get; set; } = string.Empty;
 
-        [MaxLength(255)]
-        public string? ProviderEmail { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public Users User { get; set; } = null!;

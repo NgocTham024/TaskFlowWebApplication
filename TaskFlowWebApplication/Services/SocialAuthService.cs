@@ -173,18 +173,20 @@ namespace TaskFlowWebApplication.Services
                 }
 
                 // 7. Liên kết Google với tài khoản TaskFlow
+
+                // 7. Liên kết Google với tài khoản TaskFlow
                 var newSocialAccount = new SocialAccount
                 {
                     UserId = user.UserId,
                     Provider = provider,
                     ProviderUserId = providerUserId,
-                    ProviderEmail = email,
                     CreatedAt = DateTime.UtcNow
                 };
 
                 _context.SocialAccounts.Add(newSocialAccount);
 
                 await _context.SaveChangesAsync();
+
             }
 
             // 8. Kiểm tra tài khoản có bật 2FA không

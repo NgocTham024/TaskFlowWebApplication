@@ -1,28 +1,33 @@
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskFlowWebApplication.Model
 {
-    [Table("PasswordResetTokens")]
+    [Table("password_reset_tokens")]
     public class PasswordResetToken
     {
         [Key]
-        public int Id { get; set; }
+        [Column("id")]
+        public long Id { get; set; }
 
-        [Required]
+        [Column("user_id")]
         public int UserId { get; set; }
 
         [Required]
         [MaxLength(255)]
+        [Column("token_hash")]
         public string TokenHash { get; set; } = string.Empty;
 
-        [Required]
+        [Column("expires_at")]
         public DateTime ExpiresAt { get; set; }
 
+        [Column("used_at")]
         public DateTime? UsedAt { get; set; }
 
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public Users User { get; set; } = null!;
