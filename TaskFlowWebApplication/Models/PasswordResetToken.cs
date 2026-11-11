@@ -1,31 +1,21 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace TaskFlowWebApplication.Model
+namespace TaskFlowWebApplication.Models;
+
+public partial class PasswordResetToken
 {
-    [Table("password_reset_tokens")]
-    public class PasswordResetToken
-    {
-        [Key]
-        [Column("id")]
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        [Column("user_id")]
-        public int UserId { get; set; }
+    public int UserId { get; set; }
 
-        [Required]
-        [MaxLength(255)]
-        [Column("token_hash")]
-        public string TokenHash { get; set; } = string.Empty;
+    public string TokenHash { get; set; } = null!;
 
-        [Column("expires_at")]
-        public DateTime ExpiresAt { get; set; }
+    public DateTime ExpiresAt { get; set; }
 
-        [Column("used_at")]
-        public DateTime? UsedAt { get; set; }
+    public DateTime? UsedAt { get; set; }
 
-        [Column("created_at")]
-        public DateTime CreatedAt { get; set; }
-    }
+    public DateTime CreatedAt { get; set; }
+
+    public virtual User User { get; set; } = null!;
 }
