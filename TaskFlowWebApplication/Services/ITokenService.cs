@@ -7,5 +7,7 @@ namespace TaskFlowWebApplication.Services
         string GenerateAccessToken(Users user);
         string GenerateRefreshToken();
         DateTime GetAccessTokenExpiration();
+        string GenerateTwoFactorChallengeToken(int userId);
+        int? ValidateTwoFactorChallengeToken(string challengeToken);
     }
 }
