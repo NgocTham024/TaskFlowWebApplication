@@ -2,8 +2,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Security.Claims;
 using TaskFlowWebApplication.Data;
 using TaskFlowWebApplication.Services;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 
 namespace TaskFlowWebApplication
 {
@@ -13,22 +17,69 @@ namespace TaskFlowWebApplication
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // DATA PROTECTION
+            var dataProtectionPath = Path.Combine(
+                builder.Environment.ContentRootPath,
+                "DataProtection-Keys");
+
+            builder.Services
+                .AddDataProtection()
+                .SetApplicationName("TaskFlowWebApplication")
+                .PersistKeysToFileSystem(
+                    new DirectoryInfo(dataProtectionPath));
+
+            // DATABASE
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            // Add services to the container.
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+                options.UseSqlServer(connectionString));
 
-            // Đăng ký Services
+            // SERVICES
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ITokenIssue, TokenIssue>();
+            builder.Services.AddScoped<UserRoleService>();
+            builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
+            builder.Services.AddScoped<ITwoFactorService, TwoFactorService>();
+            builder.Services.AddScoped<ISocialAuthService, SocialAuthService>();
 
+            // CONTROLLERS & SWAGGER
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            // RATE LIMITING
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.AddPolicy("LoginLimiter", httpContext =>
+                {
+                    var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                    return RateLimitPartition.GetFixedWindowLimiter(
+                        ipAddress,
+                        _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 10,
+                            Window = TimeSpan.FromMinutes(1),
+                            QueueLimit = 0,
+                            AutoReplenishment = true
+                        });
+                });
+
+                options.AddPolicy("TwoFactorLimit", httpContext =>
+                {
+                    var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+                    return RateLimitPartition.GetFixedWindowLimiter(
+                        ipAddress,
+                        _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5,
+                            Window = TimeSpan.FromMinutes(1),
+                            QueueLimit = 0,
+                            AutoReplenishment = true
+                        });
+                });
+            });
 
             // Cấu hình JWT Authentication
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -48,11 +99,12 @@ namespace TaskFlowWebApplication
                     ValidIssuer = jwtSettings["Issuer"],
                     ValidAudience = jwtSettings["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!))
+                        Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!)),
+                    RoleClaimType = ClaimTypes.Role
                 };
             });
 
-            // CORS - cần AllowCredentials để gửi cookie
+            // CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend", policy =>
@@ -60,7 +112,7 @@ namespace TaskFlowWebApplication
                     policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
                           .AllowAnyMethod()
                           .AllowAnyHeader()
-                          .AllowCredentials(); // Bắt buộc để gửi/nhận cookie
+                          .AllowCredentials();
                 });
             });
 
@@ -75,7 +127,11 @@ namespace TaskFlowWebApplication
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
             app.UseCors("AllowFrontend");
+
+            app.UseRateLimiter();
 
             app.UseAuthentication();
             app.UseAuthorization();

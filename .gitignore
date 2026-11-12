@@ -1,0 +1,20 @@
+
+# Visual Studio
+.vs/
+**/.vs/
+
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Data Protection keys
+DataProtection-Keys/
+
+# Sensitive configuration
+appsettings.Development.json

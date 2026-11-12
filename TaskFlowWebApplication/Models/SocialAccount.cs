@@ -1,3 +1,4 @@
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,5 +27,8 @@ namespace TaskFlowWebApplication.Model
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public Users User { get; set; } = null!;
     }
 }
