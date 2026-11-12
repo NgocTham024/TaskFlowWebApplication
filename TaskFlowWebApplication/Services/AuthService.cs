@@ -1,8 +1,6 @@
-
 using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.Data;
 using TaskFlowWebApplication.Helpers;
-using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Services
 {
@@ -12,141 +10,68 @@ namespace TaskFlowWebApplication.Services
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _config;
 
-        public AuthService(
-            AppDbContext context,
-            ITokenService tokenService,
-            IConfiguration config)
+        public AuthService(AppDbContext context, ITokenService tokenService, IConfiguration config)
         {
             _context = context;
             _tokenService = tokenService;
             _config = config;
         }
 
-        public async Task<(
-            bool Success,
-            string Message,
-            string? AccessToken,
-            DateTime? ExpiresAt,
-            string? RefreshToken,
-            int RefreshTokenExpirationDays
-        )> RefreshTokenAsync(string refreshToken)
+        public async Task<(bool Success, string Message, string? AccessToken, DateTime? ExpiresAt)> RefreshTokenAsync(string refreshToken)
         {
             if (string.IsNullOrWhiteSpace(refreshToken))
             {
-                return (
-                    false,
-                    "Refresh Token không hợp lệ.",
-                    null, null, null, 0
-                );
+                return (false, "Refresh Token không hợp lệ.", null, null);
             }
 
+            // hash token đầu vào bằng SHA256
             var tokenHash = RefreshTokenHelper.HashToken(refreshToken);
 
-            // Tìm Refresh Token cũ
+            // tìm token khớp trực tiếp trong db
             var storedToken = await _context.RefreshTokens
                 .FirstOrDefaultAsync(t => t.TokenHash == tokenHash);
 
+            // kiểm tra token hợp lệ
             if (storedToken == null)
-            {
-                return (
-                    false,
-                    "Refresh Token không hợp lệ.",
-                    null, null, null, 0
-                );
-            }
+                return (false, "Refresh Token không hợp lệ hoặc đã bị thu hồi.", null, null);
 
-            // Kiểm tra token đã bị thu hồi
+            // kiểm tra token đã bị revoke
             if (storedToken.RevokedAt != null)
-            {
-                return (
-                    false,
-                    "Refresh Token đã bị thu hồi.",
-                    null, null, null, 0
-                );
-            }
+                return (false, "Refresh Token đã bị thu hồi.", null, null);
 
-            // Kiểm tra hết hạn
+            // kiểm tra token hết hạn (> 3 ngày)
             if (storedToken.ExpiresAt <= DateTime.UtcNow)
             {
                 storedToken.RevokedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
-
-                return (
-                    false,
-                    "Refresh Token đã hết hạn.",
-                    null, null, null, 0
-                );
+                return (false, "Refresh Token đã hết hạn. Vui lòng đăng nhập lại.", null, null);
             }
 
-            // Tìm User
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.UserId == storedToken.UserId);
-
+            // tìm user sở hữu token
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == storedToken.UserId);
             if (user == null)
             {
                 storedToken.RevokedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
-
-                return (
-                    false,
-                    "Người dùng không tồn tại.",
-                    null, null, null, 0
-                );
+                return (false, "Người dùng không tồn tại.", null, null);
             }
 
-            // Đọc thời hạn Refresh Token từ cấu hình
-            var jwtSettings = _config.GetSection("JwtSettings");
+            // Lấy danh sách Role của người dùng từ database
+            var roles = await (
+                from userRole in _context.UserRoles
+                join role in _context.Roles
+                    on userRole.RoleId equals role.Id
+                where userRole.UserId == user.UserId
+                select role.Name
+            )
+            .Distinct()
+            .ToListAsync();
 
-            var refreshTokenDays = int.Parse(
-                jwtSettings["RefreshTokenExpirationDays"] ?? "3");
+            // Tạo Access Token mới có Role Claim
+            string accessToken = _tokenService.GenerateAccessToken(user, roles);
+            DateTime expiresAt = _tokenService.GetAccessTokenExpiration();
 
-            if (refreshTokenDays <= 0)
-            {
-                throw new InvalidOperationException(
-                    "RefreshTokenExpirationDays phải lớn hơn 0.");
-            }
-
-            // Tạo Access Token mới
-            var newAccessToken = _tokenService.GenerateAccessToken(user);
-            var accessTokenExpiry = _tokenService.GetAccessTokenExpiration();
-
-            // Tạo Refresh Token mới
-            var newRefreshToken = _tokenService.GenerateRefreshToken();
-
-            var newRefreshTokenHash =
-                RefreshTokenHelper.HashToken(newRefreshToken);
-
-            var newRefreshExpiry =
-                DateTime.UtcNow.AddDays(refreshTokenDays);
-
-            // Thu hồi Refresh Token cũ
-            storedToken.RevokedAt = DateTime.UtcNow;
-
-            // Lưu Refresh Token mới
-            var newTokenEntity = new RefreshToken
-            {
-                UserId = user.UserId,
-                TokenHash = newRefreshTokenHash,
-                ExpiresAt = newRefreshExpiry,
-                RevokedAt = null
-            };
-
-            _context.RefreshTokens.Add(newTokenEntity);
-
-            // Cập nhật Refresh Token trong Users
-            user.RefreshToken = newRefreshTokenHash;
-            user.RefreshTokenExpiryTime = newRefreshExpiry;
-
-            await _context.SaveChangesAsync();
-
-            return (
-                true,
-                "Làm mới Access Token thành công.",
-                newAccessToken,
-                accessTokenExpiry,
-                newRefreshToken,
-                refreshTokenDays
-            );
+            return (true, "Làm mới Access Token thành công.", accessToken, expiresAt);
         }
     }
 }

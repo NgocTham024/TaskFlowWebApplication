@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using TaskFlowWebApplication.Model;
 
 namespace TaskFlowWebApplication.Models;
 
@@ -20,16 +19,13 @@ public partial class Board
 
     public DateTime UpdatedAt { get; set; }
 
-    public virtual ICollection<ActivityLog> ActivityLogs { get; set; }
-        = new List<ActivityLog>();
+    public virtual ICollection<ActivityLog> ActivityLogs { get; set; } = new List<ActivityLog>();
 
-    public virtual ICollection<BoardColumn> BoardColumns { get; set; }
-        = new List<BoardColumn>();
+    public virtual ICollection<BoardColumn> BoardColumns { get; set; } = new List<BoardColumn>();
 
-    public virtual Users CreatedByNavigation { get; set; } = null!;
+    public virtual User CreatedByNavigation { get; set; } = null!;
 
-    public virtual ICollection<Notification> Notifications { get; set; }
-        = new List<Notification>();
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
     public virtual Workspace Workspace { get; set; } = null!;
 }

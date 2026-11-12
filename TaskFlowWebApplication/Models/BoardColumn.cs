@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TaskFlowWebApplication.Models;
@@ -19,6 +19,5 @@ public partial class BoardColumn
 
     public virtual Board Board { get; set; } = null!;
 
-    public virtual ICollection<TaskList> TaskLists { get; set; }
-        = new List<TaskList>();
+    public virtual ICollection<TaskList> TaskLists { get; set; } = new List<TaskList>();
 }

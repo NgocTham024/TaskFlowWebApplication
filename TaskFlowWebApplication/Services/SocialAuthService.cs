@@ -2,7 +2,7 @@
 using Google.Apis.Auth;
 using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.Data;
-using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Services
 {
@@ -103,7 +103,7 @@ namespace TaskFlowWebApplication.Services
                     x.Provider == provider &&
                     x.ProviderUserId == providerUserId);
 
-            Users? user;
+            User? user;
 
             if (socialAccount != null)
             {
@@ -128,7 +128,7 @@ namespace TaskFlowWebApplication.Services
                 if (user != null)
                 {
                     // Chỉ tự động liên kết nếu email TaskFlow đã xác minh
-                    if (!user.IsEmailVerified)
+                    if (user.IsEmailVerified == 0)
                     {
                         return new SocialLoginResult
                         {
@@ -158,13 +158,13 @@ namespace TaskFlowWebApplication.Services
                             System.Security.Cryptography.RandomNumberGenerator
                                 .GetBytes(48));
 
-                    user = new Users
+                    user = new User
                     {
                         Username = username,
                         Email = email,
                         PasswordHash = BCrypt.Net.BCrypt.HashPassword(
                             randomPassword),
-                        IsEmailVerified = true
+                        IsEmailVerified = 1, IsActive = 1, CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow
                     };
 
                     _context.Users.Add(user);
@@ -193,7 +193,7 @@ namespace TaskFlowWebApplication.Services
             var twoFactor = await _context.UserTwoFactors
                 .FirstOrDefaultAsync(x => x.UserId == user.UserId);
 
-            if (twoFactor?.IsEnabled == true)
+            if (twoFactor?.IsEnabled == 1)
             {
                 var challengeToken =
                     await _twoFactorService.CreateLoginChallengeAsync(

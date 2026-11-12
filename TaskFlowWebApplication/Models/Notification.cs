@@ -1,5 +1,5 @@
-using System;
-using TaskFlowWebApplication.Model;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TaskFlowWebApplication.Models;
 
@@ -23,11 +23,11 @@ public partial class Notification
 
     public DateTime CreatedAt { get; set; }
 
-    public virtual Users? Actor { get; set; }
+    public virtual User? Actor { get; set; }
 
     public virtual Board? Board { get; set; }
 
     public virtual Tasks? Task { get; set; }
 
-    public virtual Users User { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 }

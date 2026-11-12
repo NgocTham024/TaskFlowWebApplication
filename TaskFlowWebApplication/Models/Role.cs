@@ -1,5 +1,5 @@
+﻿using System;
 using System.Collections.Generic;
-using TaskFlowWebApplication.Model;
 
 namespace TaskFlowWebApplication.Models;
 
@@ -9,9 +9,7 @@ public partial class Role
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<WorkspaceMember> WorkspaceMembers { get; set; }
-        = new List<WorkspaceMember>();
+    public virtual ICollection<WorkspaceMember> WorkspaceMembers { get; set; } = new List<WorkspaceMember>();
 
-    public virtual ICollection<Users> Users { get; set; }
-        = new List<Users>();
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

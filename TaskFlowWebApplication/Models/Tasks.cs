@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using TaskFlowWebApplication.Model;
-
-namespace TaskFlowWebApplication.Models
+﻿namespace TaskFlowWebApplication.Models
 {
     public class Tasks
     {
@@ -32,27 +28,22 @@ namespace TaskFlowWebApplication.Models
 
         public DateTime UpdatedAt { get; set; }
 
-        public virtual ICollection<ActivityLog> ActivityLogs { get; set; }
-            = new List<ActivityLog>();
+        public virtual ICollection<ActivityLog> ActivityLogs { get; set; } = new List<ActivityLog>();
 
-        public virtual Users CreatedByNavigation { get; set; } = null!;
+        public virtual User CreatedByNavigation { get; set; } = null!;
 
         public virtual TaskList List { get; set; } = null!;
 
-        public virtual ICollection<Notification> Notifications { get; set; }
-            = new List<Notification>();
+        public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
         public virtual TaskPriority Priority { get; set; } = null!;
 
         public virtual TaskStatus Status { get; set; } = null!;
 
-        public virtual ICollection<TaskAssignee> TaskAssignees { get; set; }
-            = new List<TaskAssignee>();
+        public virtual ICollection<TaskAssignee> TaskAssignees { get; set; } = new List<TaskAssignee>();
 
-        public virtual ICollection<TaskComment> TaskComments { get; set; }
-            = new List<TaskComment>();
+        public virtual ICollection<TaskComment> TaskComments { get; set; } = new List<TaskComment>();
 
-        public virtual ICollection<Label> Labels { get; set; }
-            = new List<Label>();
+        public virtual ICollection<Label> Labels { get; set; } = new List<Label>();
     }
 }

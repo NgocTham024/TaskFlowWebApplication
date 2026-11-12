@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using TaskFlowWebApplication.Data;
 using TaskFlowWebApplication.DTOs;
-using TaskFlowWebApplication.Model;
+using TaskFlowWebApplication.Models;
 
 namespace TaskFlowWebApplication.Services
 {
@@ -46,7 +46,7 @@ namespace TaskFlowWebApplication.Services
             var twoFactor = await _context.UserTwoFactors
                 .FirstOrDefaultAsync(x => x.UserId == userId);
 
-            if (twoFactor?.IsEnabled == true)
+            if (twoFactor?.IsEnabled == 1)
                 throw new InvalidOperationException("2FA đã được bật.");
 
             //tạo Secret Key ngẫu nhiên 160 bit
@@ -63,7 +63,7 @@ namespace TaskFlowWebApplication.Services
                 {
                     UserId = userId,
                     CreatedAt = DateTime.UtcNow,
-                    IsEnabled = false
+                    IsEnabled = 0
                 };
 
                 _context.UserTwoFactors.Add(twoFactor);
@@ -148,7 +148,7 @@ namespace TaskFlowWebApplication.Services
 
             twoFactor.PendingSecretKeyProtected = null;
 
-            twoFactor.IsEnabled = true;
+            twoFactor.IsEnabled = 1;
 
             twoFactor.EnabledAt = DateTime.UtcNow;
 
@@ -192,7 +192,7 @@ namespace TaskFlowWebApplication.Services
                 .FirstOrDefaultAsync(x => x.UserId == userId);
 
             if (twoFactor == null ||
-                !twoFactor.IsEnabled ||
+                twoFactor.IsEnabled == 0 ||
                 string.IsNullOrWhiteSpace(
                     twoFactor.SecretKeyProtected))
             {
@@ -216,7 +216,7 @@ namespace TaskFlowWebApplication.Services
                 return false;
 
             //tắt 2FA và xóa Secret Key
-            twoFactor.IsEnabled = false;
+            twoFactor.IsEnabled = 0;
 
             twoFactor.SecretKeyProtected = null;
 
@@ -256,7 +256,7 @@ namespace TaskFlowWebApplication.Services
             var twoFactor = await _context.UserTwoFactors
                 .FirstOrDefaultAsync(x => x.UserId == userId);
 
-            if (twoFactor?.IsEnabled != true)
+            if (twoFactor?.IsEnabled != 1)
                 throw new InvalidOperationException("2FA chưa được bật.");
 
             var now = DateTime.UtcNow;
@@ -346,7 +346,7 @@ namespace TaskFlowWebApplication.Services
                     x.UserId == challenge.UserId);
 
             if (twoFactor == null ||
-                !twoFactor.IsEnabled ||
+                twoFactor.IsEnabled == 0 ||
                 string.IsNullOrWhiteSpace(
                     twoFactor.SecretKeyProtected))
             {

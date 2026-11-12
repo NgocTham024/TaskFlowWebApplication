@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace TaskFlowWebApplication.Data
 {
-    public class AppDbContextFactory
-        : IDesignTimeDbContextFactory<AppDbContext>
+    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {
         public AppDbContext CreateDbContext(string[] args)
         {
@@ -16,12 +15,8 @@ namespace TaskFlowWebApplication.Data
                 .AddEnvironmentVariables()
                 .Build();
 
-            var connectionString =
-                configuration.GetConnectionString("DefaultConnection");
-
-            var optionsBuilder =
-                new DbContextOptionsBuilder<AppDbContext>();
-
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder.UseSqlServer(connectionString);
 
             return new AppDbContext(optionsBuilder.Options);

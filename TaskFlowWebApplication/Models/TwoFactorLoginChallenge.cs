@@ -1,31 +1,23 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
 
-namespace TaskFlowWebApplication.Model
+namespace TaskFlowWebApplication.Models;
+
+public partial class TwoFactorLoginChallenge
 {
-    [Table("TwoFactorLoginChallenges")]
-    public class TwoFactorLoginChallenge
-    {
-        [Key]
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
+    public int UserId { get; set; }
 
-        [Required]
-        [MaxLength(64)]
-        public string TokenHash { get; set; } = string.Empty;
+    public string TokenHash { get; set; } = null!;
 
-        [Required]
-        public DateTime ExpiresAt { get; set; }
+    public DateTime ExpiresAt { get; set; }
 
-        public DateTime? UsedAt { get; set; }
+    public DateTime? UsedAt { get; set; }
 
-        public int FailedAttempts { get; set; } = 0;
+    public int FailedAttempts { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public Users User { get; set; } = null!;
-    }
+    public virtual User User { get; set; } = null!;
 }

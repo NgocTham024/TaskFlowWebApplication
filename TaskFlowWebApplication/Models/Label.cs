@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TaskFlowWebApplication.Models;
@@ -17,6 +17,5 @@ public partial class Label
 
     public virtual Workspace Workspace { get; set; } = null!;
 
-    public virtual ICollection<Tasks> Tasks { get; set; }
-        = new List<Tasks>();
+    public virtual ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
 }

@@ -1,5 +1,5 @@
-using System;
-using TaskFlowWebApplication.Model;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TaskFlowWebApplication.Models;
 
@@ -19,5 +19,5 @@ public partial class TaskComment
 
     public virtual Tasks Task { get; set; } = null!;
 
-    public virtual Users User { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 }

@@ -9,10 +9,9 @@ namespace TaskFlowWebApplication.Controller
     {
         [HttpPost("login/2fa")]
         [EnableRateLimiting("TwoFactorLimit")]
-        public async Task<IActionResult> VerifyLoginTwoFactor(
-            [FromBody] TwoFactorLoginDTO dto)
+        public async Task<IActionResult> VerifyLoginTwoFactor([FromBody] TwoFactorLoginDTO dto)
         {
-            //xác minh Challenge Token và OTP
+            // xác minh Challenge Token và OTP
             var userId = await _twoFactorService.VerifyLoginAsync(
                 dto.ChallengeToken,
                 dto.Code);
@@ -25,11 +24,11 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            //lấy User sau khi OTP hợp lệ
+            // lấy User sau khi OTP hợp lệ
             var user = await _context.Users
                 .FirstOrDefaultAsync(x => x.UserId == userId.Value);
 
-            if (user == null || !user.IsEmailVerified)
+            if (user == null || user.IsEmailVerified == 0)
             {
                 return Unauthorized(new
                 {
@@ -37,11 +36,11 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            //kiểm tra 2FA vẫn còn được bật
+            // kiểm tra 2FA vẫn còn được bật
             var twoFactor = await _context.UserTwoFactors
                 .FirstOrDefaultAsync(x => x.UserId == userId.Value);
 
-            if (twoFactor?.IsEnabled != true)
+            if (twoFactor != null && twoFactor.IsEnabled == 0 && user.TwoFactorEnabled == 0)
             {
                 return Unauthorized(new
                 {
@@ -49,7 +48,7 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            //cấp Access Token và Refresh Token
+            // cấp Access Token và Refresh Token
             return await CompleteLoginAsync(user);
         }
     }

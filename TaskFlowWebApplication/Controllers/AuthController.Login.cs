@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using TaskFlowWebApplication.DTOs;
 using TaskFlowWebApplication.Helpers;
-using TaskFlowWebApplication.Model;
 using TaskFlowWebApplication.Models;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace TaskFlowWebApplication.Controller
 {
@@ -12,9 +12,10 @@ namespace TaskFlowWebApplication.Controller
     {
         [HttpPost("login")]
         [AllowAnonymous]
+        [EnableRateLimiting("LoginLimiter")]
         public async Task<IActionResult> Login([FromBody] LoginDTO dto)
         {
-            // 1. Tìm user bằng email HOẶC username
+            // tìm user bằng email HOẶC username
             var user = await _context.Users.FirstOrDefaultAsync(u =>
                 u.Email == dto.EmailOrUsername ||
                 u.Username == dto.EmailOrUsername);
@@ -27,7 +28,7 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            // 2. Verify password bằng BCrypt
+            // verify password bằng BCrypt
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(
                 dto.Password,
                 user.PasswordHash
@@ -41,8 +42,8 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            // 3. Kiểm tra trạng thái tài khoản (email đã xác thực chưa)
-            if (!user.IsEmailVerified)
+            // kiểm tra trạng thái tài khoản
+            if (user.IsEmailVerified == 0)
             {
                 return Unauthorized(new
                 {
@@ -50,11 +51,11 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            // 4. Kiểm tra trạng thái 2FA
+            // kiểm tra trạng thái 2FA
             var twoFactor = await _context.UserTwoFactors
                 .FirstOrDefaultAsync(x => x.UserId == user.UserId);
 
-            if (twoFactor?.IsEnabled == true)
+            if ((twoFactor != null && twoFactor.IsEnabled == 1) || user.TwoFactorEnabled == 1)
             {
                 var challengeToken = await _twoFactorService.CreateLoginChallengeAsync(user.UserId);
 
@@ -66,17 +67,33 @@ namespace TaskFlowWebApplication.Controller
                 });
             }
 
-            // 5. Nếu không bật 2FA, hoàn tất đăng nhập bình thường
+            // hoàn tất đăng nhập
             return await CompleteLoginAsync(user);
         }
 
-        // Hoàn tất đăng nhập và cấp Token
-        private async Task<IActionResult> CompleteLoginAsync(Users user)
+        private async Task<IActionResult> CompleteLoginAsync(User user)
         {
-            // Tạo JWT Access Token
-            var accessToken = _tokenService.GenerateAccessToken(user);
+            // lấy danh sách Role từ database
+            var roles = await (
+                from userRole in _context.UserRoles
+                join role in _context.Roles
+                    on userRole.RoleId equals role.Id
+                where userRole.UserId == user.UserId
+                select role.Name
+            ).Distinct().ToListAsync();
 
-            // Tạo Refresh Token
+            if (roles.Count == 0)
+            {
+                return StatusCode(403, new
+                {
+                    message = "Tài khoản chưa được cấp quyền."
+                });
+            }
+
+            // tạo JWT Access Token chứa Role Claim
+            var accessToken = _tokenService.GenerateAccessToken(user, roles);
+
+            // tạo Refresh Token
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -87,7 +104,7 @@ namespace TaskFlowWebApplication.Controller
 
             var refreshExpiry = DateTime.UtcNow.AddDays(refreshTokenDays);
 
-            // Lưu Refresh Token dạng SHA256 hash
+            // lưu Refresh Token dạng SHA256 hash
             var tokenHash = RefreshTokenHelper.HashToken(refreshToken);
 
             var refreshTokenEntity = new RefreshToken
@@ -100,16 +117,16 @@ namespace TaskFlowWebApplication.Controller
 
             _context.RefreshTokens.Add(refreshTokenEntity);
 
-            // Cập nhật bảng Users
+            // cập nhật bảng Users
             user.RefreshToken = tokenHash;
             user.RefreshTokenExpiryTime = refreshExpiry;
 
             await _context.SaveChangesAsync();
 
-            // Gửi Refresh Token qua HttpOnly Cookie
+            // gửi Refresh Token qua HttpOnly Cookie
             SetRefreshTokenCookie(refreshToken, refreshTokenDays);
 
-            // Trả Access Token về frontend
+            // trả Access Token về frontend
             return Ok(new
             {
                 requiresTwoFactor = false,
@@ -118,7 +135,7 @@ namespace TaskFlowWebApplication.Controller
             });
         }
 
-        // Set Refresh Token vào HttpOnly Cookie
+        // set Refresh Token vào HttpOnly Cookie
         private void SetRefreshTokenCookie(
             string refreshToken,
             int expirationDays)
